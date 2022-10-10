@@ -16,13 +16,20 @@ mod selection;
 
 pub struct GeneticAlgorithm<S> {
     selection_method: S,
+    crossover_method: Box<dyn CrossoverMethod>,
 }
 
 impl<S> GeneticAlgorithm<S>
     where S: SelectionMethod
 {
-    pub fn new(selection_method: S) -> Self {
-        return Self { selection_method };
+    pub fn new(
+        selection_method: S,
+        crossover_method: impl CrossoverMethod + 'static,
+    ) -> Self {
+        return Self {
+            selection_method,
+            crossover_method: Box::new(crossover_method),
+        };
     }
 
     pub fn evolve<I>(
@@ -39,8 +46,9 @@ impl<S> GeneticAlgorithm<S>
                 // Selection
                 let [parent_a, parent_b] = [0, 1].map(|_| self.selection_method.select(rng, population).chromosome());
 
+                // Crossover genes
+                let mut child = self.crossover_method.crossover(rng, parent_a, parent_b);
 
-                // TODO: crossover
                 // TODO: mutation
                 // TODO: Convert `Chromosome` back to `Individual`
                 todo!()
