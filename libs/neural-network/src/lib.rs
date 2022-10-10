@@ -1,6 +1,4 @@
-use std::iter::once;
-
-use rand::{Rng, RngCore};
+use rand::Rng;
 
 use self::{layer::*, neuron::*};
 pub use self::layer_topology::*;
