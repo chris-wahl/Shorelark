@@ -1,5 +1,7 @@
 use rand::RngCore;
 
+pub use roulette_wheel::RouletteWheelSelection;
+
 use crate::individual::Individual;
 
 mod roulette_wheel;

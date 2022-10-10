@@ -1,3 +1,4 @@
+pub use gaussian::GaussianMutation;
 use rand::RngCore;
 
 use crate::Chromosome;
