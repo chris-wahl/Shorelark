@@ -1,4 +1,5 @@
 pub use self::{
+    chromosome::*,
     individual::*,
     selection::*,
 };
@@ -7,6 +8,7 @@ use rand::RngCore;
 
 mod individual;
 mod selection;
+mod chromosome;
 
 pub struct GeneticAlgorithm<S> {
     selection_method: S,
