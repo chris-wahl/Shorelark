@@ -43,7 +43,7 @@ mod tests {
             TestIndividual::new(3.0),
         ];
 
-        let mut actual_histogram: BTreeMap<i32, _> = (0..1000)
+        let actual_histogram: BTreeMap<i32, _> = (0..1000)
             .map(|_| method.select(&mut rng, &population))
             .fold(Default::default(), |mut historgram, individual| {
                 *historgram.entry(individual.fitness() as _)
