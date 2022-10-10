@@ -1,5 +1,7 @@
 #![feature(type_alias_impl_trait)]
 
+extern crate core;
+
 use rand::RngCore;
 
 pub use self::{
@@ -33,7 +35,7 @@ impl<S> GeneticAlgorithm<S>
         return Self {
             selection_method,
             crossover_method: Box::new(crossover_method),
-            mutation_method: Box::new(MutationMethod),
+            mutation_method: Box::new(mutation_method),
         };
     }
 
@@ -57,8 +59,7 @@ impl<S> GeneticAlgorithm<S>
                 // Mutate genes
                 self.mutation_method.mutate(rng, &mut child);
 
-                // TODO: Convert `Chromosome` back to `Individual`
-                todo!()
+                return I::create(child);
             })
             .collect();
     }

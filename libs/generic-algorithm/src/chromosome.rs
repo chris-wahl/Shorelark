@@ -1,8 +1,21 @@
 use std::ops::Index;
 
+
+
 #[derive(Clone, Debug)]
 pub struct Chromosome {
     genes: Vec<f32>,
+}
+
+#[cfg(test)]
+impl PartialEq for Chromosome {
+
+    fn eq(&self, other: &Self) -> bool {
+        return approx::relative_eq!(
+            self.genes.as_slice(),
+            other.genes.as_slice()
+        );
+    }
 }
 
 impl Chromosome {
