@@ -3,27 +3,40 @@ pub use self::{
     selection::*,
 };
 
+use rand::RngCore;
+
 mod individual;
 mod selection;
 
-pub struct GeneticAlgorithm;
+pub struct GeneticAlgorithm<S> {
+    selection_method: S,
+}
 
-impl GeneticAlgorithm {
-    pub fn new() -> Self { return Self; }
+impl<S> GeneticAlgorithm<S>
+    where S: SelectionMethod
+{
+    pub fn new(selection_method: S) -> Self {
+        return Self { selection_method };
+    }
 
-    pub fn evolve<I, S>(
+    pub fn evolve<I>(
         &self,
+        rng: &mut dyn RngCore,
         population: &[I],
-        selection_method: &S,
     ) -> Vec<I>
         where
-            I: Individual,
-            S: SelectionMethod
+            I: Individual
     {
         assert!(!population.is_empty());
         return (0..population.len())
             .map(|_| {
-                // TODO: selection
+                // Selection
+                let (parent_a, parent_b) = (
+                    self.selection_method.select(rng, population),
+                    self.selection_method.select(rng, population)
+                );
+
+
                 // TODO: crossover
                 // TODO: mutation
                 todo!()
