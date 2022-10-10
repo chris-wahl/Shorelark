@@ -6,12 +6,14 @@ pub use self::{
     chromosome::*,
     crossover::*,
     individual::*,
+    mutation::*,
     selection::*,
 };
 
 mod chromosome;
 mod crossover;
 mod individual;
+mod mutation;
 mod selection;
 
 pub struct GeneticAlgorithm<S> {
