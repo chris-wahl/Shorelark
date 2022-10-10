@@ -19,6 +19,7 @@ mod selection;
 pub struct GeneticAlgorithm<S> {
     selection_method: S,
     crossover_method: Box<dyn CrossoverMethod>,
+    mutation_method: Box<dyn MutationMethod>,
 }
 
 impl<S> GeneticAlgorithm<S>
@@ -27,10 +28,12 @@ impl<S> GeneticAlgorithm<S>
     pub fn new(
         selection_method: S,
         crossover_method: impl CrossoverMethod + 'static,
+        mutation_method: impl MutationMethod + 'static
     ) -> Self {
         return Self {
             selection_method,
             crossover_method: Box::new(crossover_method),
+            mutation_method: Box::new(MutationMethod),
         };
     }
 
@@ -51,7 +54,9 @@ impl<S> GeneticAlgorithm<S>
                 // Crossover genes
                 let mut child = self.crossover_method.crossover(rng, parent_a, parent_b);
 
-                // TODO: mutation
+                // Mutate genes
+                self.mutation_method.mutate(rng, &mut child);
+
                 // TODO: Convert `Chromosome` back to `Individual`
                 todo!()
             })
