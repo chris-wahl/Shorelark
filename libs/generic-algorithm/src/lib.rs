@@ -4,13 +4,15 @@ use rand::RngCore;
 
 pub use self::{
     chromosome::*,
+    crossover::*,
     individual::*,
     selection::*,
 };
 
+mod chromosome;
+mod crossover;
 mod individual;
 mod selection;
-mod chromosome;
 
 pub struct GeneticAlgorithm<S> {
     selection_method: S,

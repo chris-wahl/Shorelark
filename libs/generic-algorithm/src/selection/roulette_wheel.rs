@@ -1,4 +1,4 @@
-use rand::{Rng, RngCore};
+use rand::{RngCore};
 use rand::seq::SliceRandom;
 
 use crate::{Individual, SelectionMethod};
