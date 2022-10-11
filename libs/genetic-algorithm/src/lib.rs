@@ -5,18 +5,20 @@ extern crate core;
 use rand::RngCore;
 
 pub use self::{
+    chromosome::Chromosome,
     crossover::UniformCrossover,
+    individual::Individual,
     mutation::GaussianMutation,
     selection::RouletteWheelSelection,
 };
 
 use self::{
-    chromosome::*,
     crossover::*,
-    individual::*,
     mutation::*,
     selection::*,
 };
+#[cfg(test)]
+use self::individual::TestIndividual;
 
 mod chromosome;
 mod crossover;

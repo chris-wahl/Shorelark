@@ -6,7 +6,9 @@ use rand::{Rng, RngCore};
 use lib_genetic_algorithm as ga;
 use lib_neural_network as nn;
 
-pub use crate::{
+use self::animal_individual::*;
+
+pub use self::{
     animal::Animal,
     eye::Eye,
     food::Food,
@@ -14,6 +16,7 @@ pub use crate::{
 };
 
 mod animal;
+mod animal_individual;
 mod eye;
 mod food;
 mod world;
@@ -56,6 +59,11 @@ impl Simulation {
         self.process_collisions(rng);
         self.process_brains();
         self.process_movements();
+
+        self.age += 1;
+        if self.age > GENERATION_LENGTH {
+            self.evolve(rng);
+        }
     }
 
     fn process_collisions(&mut self, rng: &mut dyn RngCore) {
@@ -67,6 +75,7 @@ impl Simulation {
                 let distance = na::distance(&animal.position, &food.position);
 
                 if distance <= 0.01 {
+                    animal.satiation += 1;
                     food.position = rng.gen();
                 }
             }
@@ -97,5 +106,28 @@ impl Simulation {
             animal.position.x = na::wrap(animal.position.x, 0.0, 1.0);
             animal.position.y = na::wrap(animal.position.y, 0.0, 1.0);
         }
+    }
+
+    fn evolve(&mut self, rng: &mut dyn RngCore) {
+        self.age = 0;
+
+        // 1. Prepare the current population of birds to go into the GA (must have `Individual` trait
+        let current_population: Vec<_> = self.world
+            .animals
+            .iter()
+            .map(AnimalIndividual::from_animal)
+            .collect();
+
+        // 2. Evolve the population
+        let evolved_population = self.ga.evolve(rng, &current_population);
+
+        // 3. Return from the GA
+        self.world.animals = evolved_population
+            .into_iter()
+            .map(|individual| individual.into_animal(rng))
+            .collect();
+
+        // 4. Restart food (not required; just makes it easier to see when an evolution happens in the UI)
+        self.world.foods.iter_mut().for_each(|food| food.position = rng.gen());
     }
 }

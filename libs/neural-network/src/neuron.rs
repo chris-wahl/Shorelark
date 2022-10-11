@@ -2,8 +2,8 @@ use crate::*;
 
 #[derive(Clone, Debug)]
 pub struct Neuron {
-    bias: f32,
-    weights: Vec<f32>,
+    pub(crate) bias: f32,
+    pub(crate) weights: Vec<f32>,
 }
 
 impl Neuron {
@@ -26,6 +26,17 @@ impl Neuron {
 
         let weights = (0..output_size)
             .map(|_| rng.gen_range(-1.0..=1.0))
+            .collect();
+        return Self { bias, weights };
+    }
+
+    pub fn from_weights(
+        output_neurons: usize,
+        weights: &mut dyn Iterator<Item = f32>,
+    ) -> Self {
+        let bias = weights.next().expect("Did not a bias");
+        let weights = (0..output_neurons)
+            .map(|_| weights.next().expect("Did not get enough weights"))
             .collect();
         return Self { bias, weights };
     }
