@@ -1,13 +1,8 @@
+use wasm_bindgen::prelude::*;
+
 use lib_simulation as sim;
 use rand::prelude::*;
 use serde::Serialize;
-use wasm_bindgen::prelude::*;
-
-#[wasm_bindgen]
-pub fn whos_that_dog() -> String {
-    return "McGruff".into();
-}
-
 
 #[wasm_bindgen]
 pub struct Simulation {
@@ -60,6 +55,6 @@ impl From<&sim::Animal> for Animal {
         return Self {
             x: animal.position().x,
             y: animal.position().y,
-        }
+        };
     }
 }
