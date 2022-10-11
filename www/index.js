@@ -32,16 +32,16 @@ CanvasRenderingContext2D.prototype.draw_triangle = function(x, y, size, rotation
     );
     this.lineTo(origin_x, origin_y);
 
-    // this.fillStyle = 'rgb(0, 0, 0)';
-    // this.fill();
-    this.stroke();
+    this.fillStyle = 'rgb(255, 255, 255)'; // A nice white color
+    this.fill();
+    // this.stroke();
 
 }
 CanvasRenderingContext2D.prototype.draw_circle = function(x, y, radius) {
     this.beginPath();
     this.arc(x, y, radius, 0, 2.0 * Math.PI);
 
-    this.fillStyle = 'rgb(0, 0, 0)';
+    this.fillStyle = 'rgb(0, 255, 128)'; // A nice green color
     this.fill();
 }
 
