@@ -6,7 +6,10 @@ use rand::{Rng, RngCore};
 use lib_genetic_algorithm as ga;
 use lib_neural_network as nn;
 
-use self::animal_individual::*;
+use self::{
+    animal_individual::*,
+    brain::*
+};
 
 pub use self::{
     animal::Animal,
@@ -17,6 +20,7 @@ pub use self::{
 
 mod animal;
 mod animal_individual;
+mod brain;
 mod eye;
 mod food;
 mod world;
@@ -90,7 +94,7 @@ impl Simulation {
                 &self.world.foods,
             );
 
-            let response = animal.brain.propagate(vision);
+            let response = animal.brain.nn.propagate(vision);
             let speed_acceleration = response[0].clamp(-SPEED_ACCEL, SPEED_ACCEL);
             let rotation_acceleration = response[1].clamp(-ROTATION_ACCEL, ROTATION_ACCEL);
 

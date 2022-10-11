@@ -8,47 +8,27 @@ pub struct Animal {
     pub(crate) speed: f32,
 
     pub (crate) eye: Eye,
-    pub (crate) brain: nn::Network,
+    pub (crate) brain: Brain,
 
     pub (crate) satiation: usize, // Number of foods eaten
 }
 
 impl Animal {
+
+    fn new(eye: Eye, brain: Brain, rng: &mut dyn RngCore) -> Self {
+        Self {
+            position: rng.gen(),
+            rotation: rng.gen(),
+            speed: 0.002,
+            eye,
+            brain,
+            satiation: 0,
+        }
+    }
+
     pub fn random(rng: &mut dyn RngCore) -> Self {
         let eye = Eye::default();
-        let brain = nn::Network::random(
-            rng,
-            &[
-                // The Input Layer
-                //
-                // Because our eye returns Vec<f32>, and our neural
-                // network works on Vec<f32>, we can pass-through
-                // numbers from eye into the neural network directly.
-                nn::LayerTopology {
-                    neurons: eye.cells(),
-                },
-
-                // The Hidden Layer
-                //
-                // There is no best answer as to "how many neurons
-                // the hidden layer should contain" (or how many
-                // hidden layers there should be, even - there could
-                // be zero, one, two or more!).
-                //
-                // The rule of thumb is to start with a single hidden
-                // layer that has somewhat more neurons that the input
-                // layer, and see how well the network performs.
-                nn::LayerTopology {
-                    neurons: 2 * eye.cells(),
-                },
-
-                // The Output Layer
-                //
-                // Since the brain will control our bird's speed and
-                // rotation, this gives us two numbers = two neurons.
-                nn::LayerTopology { neurons: 2 },
-            ]
-        );
+        let brain = Brain::random(rng, &eye);
 
         return Self {
             position: rng.gen(),
@@ -60,11 +40,29 @@ impl Animal {
         };
     }
 
+    pub(crate) fn as_chromosome(&self) -> ga::Chromosome {
+        // We evolve only our birds' brains, but technically there's no
+        // reason not to simulate e.g. physical properties such as size.
+        //
+        // If that was to happen, this function could be adjusted to
+        // return a longer chromosome that encodes not only the brain,
+        // but also, say, birdie's color.
+
+        return self.brain.as_chromosome();
+    }
+
     pub fn position(&self) -> na::Point2<f32> {
         return self.position;
     }
 
     pub fn rotation(&self) -> na::Rotation2<f32> {
         return self.rotation;
+    }
+
+    pub(crate) fn from_chromosome(chromosome: ga::Chromosome, rng: &mut dyn RngCore) -> Self {
+        let eye = Eye::default();
+        let brain = Brain::from_chromosome(chromosome, &eye);
+
+        return Self::new(eye, brain, rng);
     }
 }

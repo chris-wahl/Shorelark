@@ -9,12 +9,12 @@ impl AnimalIndividual {
     pub fn from_animal(animal: &Animal) -> Self {
         return Self {
             fitness: animal.satiation as f32,
-            chromosome: todo!()
+            chromosome: animal.as_chromosome()
         }
     }
 
     pub fn into_animal(self, rng: &mut dyn RngCore) -> Animal {
-        todo!()
+        return Animal::from_chromosome(self.chromosome, rng);
     }
 }
 
