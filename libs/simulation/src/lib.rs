@@ -1,6 +1,4 @@
-use std::sync::mpsc::channel;
 use nalgebra as na;
-use nalgebra::distance;
 use rand::{Rng, RngCore};
 
 pub use crate::{

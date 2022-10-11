@@ -2,7 +2,6 @@ use wasm_bindgen::prelude::*;
 
 use lib_simulation as sim;
 use rand::prelude::*;
-use serde::Serialize;
 
 pub use crate::{
     animal::*,
