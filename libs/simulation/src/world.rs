@@ -2,8 +2,8 @@ use crate::{Animal, Food, RngCore};
 
 #[derive(Debug)]
 pub struct World {
-    animals: Vec<Animal>,
-    foods: Vec<Food>,
+    pub(crate) animals: Vec<Animal>,
+    pub(crate) foods: Vec<Food>,
 }
 
 impl World {

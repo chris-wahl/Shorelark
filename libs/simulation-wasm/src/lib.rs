@@ -32,4 +32,8 @@ impl Simulation {
         let world = World::from(self.sim.world());
         return JsValue::from_serde(&world).unwrap();
     }
+
+    pub fn step(&mut self) {
+        self.sim.step();
+    }
 }

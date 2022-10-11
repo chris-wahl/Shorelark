@@ -3,9 +3,9 @@ use crate::{na, Rng, RngCore};
 
 #[derive(Debug)]
 pub struct Animal {
-    position: na::Point2<f32>,
-    rotation: na::Rotation2<f32>,
-    speed: f32,
+    pub(crate) position: na::Point2<f32>,
+    pub(crate) rotation: na::Rotation2<f32>,
+    pub(crate) speed: f32,
 }
 
 impl Animal {

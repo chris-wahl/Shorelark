@@ -37,6 +37,17 @@ CanvasRenderingContext2D.prototype.draw_triangle = function(x, y, size, rotation
     this.stroke();
 
 }
-for (const animal of simulation.world().animals) {
-    context.draw_triangle(animal.x * viewport_width, animal.y * viewport_height , 0.01 * viewport_width, animal.rotation);
+
+function redraw() {
+    context.clearRect(0, 0, viewport_width, viewport_height);
+    simulation.step();
+
+    for (const animal of simulation.world().animals) {
+        context.draw_triangle(animal.x * viewport_width, animal.y * viewport_height , 0.01 * viewport_width, animal.rotation);
+    }
+
+    requestAnimationFrame(redraw);
 }
+
+redraw();
+
