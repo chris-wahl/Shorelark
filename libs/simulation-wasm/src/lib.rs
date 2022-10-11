@@ -6,11 +6,13 @@ use serde::Serialize;
 
 pub use crate::{
     animal::*,
+    eye::*,
     food::*,
     world::*,
 };
 
 mod animal;
+mod eye;
 mod food;
 mod world;
 

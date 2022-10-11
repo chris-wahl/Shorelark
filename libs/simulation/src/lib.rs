@@ -10,6 +10,7 @@ pub use crate::{
 };
 
 mod animal;
+mod eye;
 mod food;
 mod world;
 
