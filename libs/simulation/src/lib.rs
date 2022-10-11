@@ -3,6 +3,7 @@ use std::f32::consts::FRAC_PI_2;
 use nalgebra as na;
 use rand::{Rng, RngCore};
 
+use lib_genetic_algorithm as ga;
 use lib_neural_network as nn;
 
 pub use crate::{
@@ -17,22 +18,34 @@ mod eye;
 mod food;
 mod world;
 
-const SPEED_MIN: f32 = 0.001;
 // Non-zero speed prevents bird from being stuck in one place
-const SPEED_MAX: f32 = 0.005;
+const SPEED_MIN: f32 = 0.001;
 // Prevent the bird from approaching the speed of causality `c`
-const SPEED_ACCEL: f32 = 0.2;
+const SPEED_MAX: f32 = 0.005;
 // Prevent infinite accelerations in speed
-const ROTATION_ACCEL: f32 = FRAC_PI_2; // And in rotation
+const SPEED_ACCEL: f32 = 0.2;
+// And in rotation
+const ROTATION_ACCEL: f32 = FRAC_PI_2;
+// Minimum number of steps before evolving the algorithm
+const GENERATION_LENGTH: usize = 2500;
 
 
 pub struct Simulation {
     world: World,
+    ga: ga::GeneticAlgorithm<ga::RouletteWheelSelection>,
+    age: usize,
 }
 
 impl Simulation {
     pub fn random(rng: &mut dyn RngCore) -> Self {
-        return Self { world: World::random(rng) };
+        let world = World::random(rng);
+        let ga = ga::GeneticAlgorithm::new(
+            ga::RouletteWheelSelection::default(),
+            ga::UniformCrossover::default(),
+            ga::GaussianMutation::new(0.01, 0.3)
+        );
+
+        return Self { world, ga, age: 0 };
     }
 
     pub fn world(&self) -> &World {

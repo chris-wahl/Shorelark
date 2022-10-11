@@ -5,6 +5,12 @@ extern crate core;
 use rand::RngCore;
 
 pub use self::{
+    crossover::UniformCrossover,
+    mutation::GaussianMutation,
+    selection::RouletteWheelSelection,
+};
+
+use self::{
     chromosome::*,
     crossover::*,
     individual::*,
