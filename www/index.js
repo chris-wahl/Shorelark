@@ -2,8 +2,13 @@ import * as sim from "lib-simulation-wasm";
 
 const simulation = new sim.Simulation();
 document.getElementById('train').onclick = function () {
-    simulation.train();
+    const result = simulation.train();
+    set_result(result.min, result.max, result.avg);
 };
+
+const stats_min = document.getElementById('stats_min');
+const stats_max = document.getElementById('stats_max');
+const stats_avg = document.getElementById('stats_avg');
 
 const viewport = document.getElementById('viewport');
 const viewport_scale = window.devicePixelRatio || 1;
@@ -47,9 +52,16 @@ CanvasRenderingContext2D.prototype.draw_circle = function (x, y, radius) {
     this.fill();
 }
 
+function set_result(min, max, avg) {
+    stats_min.textContent = min;
+    stats_max.textContent = max;
+    stats_avg.textContent = avg.toFixed(2);
+}
+
 function redraw() {
     context.clearRect(0, 0, viewport_width, viewport_height);
-    simulation.step();
+    const result = simulation.step();
+    if (!!result) set_result(result.min, result.max, result.avg);
 
     const world = simulation.world();
 

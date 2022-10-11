@@ -8,15 +8,15 @@ use lib_neural_network as nn;
 
 use self::{
     animal_individual::*,
-    brain::*
+    brain::*,
 };
-
 pub use self::{
     animal::Animal,
     eye::Eye,
     food::Food,
     world::World,
 };
+pub use ga::Statistics;
 
 mod animal;
 mod animal_individual;
@@ -49,7 +49,7 @@ impl Simulation {
         let ga = ga::GeneticAlgorithm::new(
             ga::RouletteWheelSelection::default(),
             ga::UniformCrossover::default(),
-            ga::GaussianMutation::new(0.01, 0.3)
+            ga::GaussianMutation::new(0.01, 0.3),
         );
 
         return Self { world, ga, age: 0 };
@@ -59,24 +59,23 @@ impl Simulation {
         return &self.world;
     }
 
-    pub fn step(&mut self, rng: &mut dyn RngCore) -> bool {
+    pub fn step(&mut self, rng: &mut dyn RngCore) -> Option<ga::Statistics> {
         self.process_collisions(rng);
         self.process_brains();
         self.process_movements();
 
         self.age += 1;
         if self.age > GENERATION_LENGTH {
-            self.evolve(rng);
-            return true;
+            return Some(self.evolve(rng));
         }
-        return false;
+        return None;
     }
 
     /// Fast-forwards until the end of the current generation.
-    pub fn train(&mut self, rng: &mut dyn RngCore) {
+    pub fn train(&mut self, rng: &mut dyn RngCore) -> ga::Statistics {
         loop {
-            if self.step(rng) {
-                return;
+            if let Some(summary) = self.step(rng) {
+                return summary;
             }
         }
     }
@@ -123,7 +122,7 @@ impl Simulation {
         }
     }
 
-    fn evolve(&mut self, rng: &mut dyn RngCore) {
+    fn evolve(&mut self, rng: &mut dyn RngCore) -> ga::Statistics {
         self.age = 0;
 
         // 1. Prepare the current population of birds to go into the GA (must have `Individual` trait
@@ -134,7 +133,7 @@ impl Simulation {
             .collect();
 
         // 2. Evolve the population
-        let evolved_population = self.ga.evolve(rng, &current_population);
+        let (evolved_population, stats) = self.ga.evolve(rng, &current_population);
 
         // 3. Return from the GA
         self.world.animals = evolved_population
@@ -144,5 +143,7 @@ impl Simulation {
 
         // 4. Restart food (not required; just makes it easier to see when an evolution happens in the UI)
         self.world.foods.iter_mut().for_each(|food| food.position = rng.gen());
+
+        return stats;
     }
 }

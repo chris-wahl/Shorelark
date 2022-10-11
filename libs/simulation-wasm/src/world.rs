@@ -1,7 +1,4 @@
-
-use serde::Serialize;
-use lib_simulation as sim;
-use crate::{animal::Animal, food::Food};
+use crate::*;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct World {

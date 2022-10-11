@@ -10,6 +10,7 @@ pub use self::{
     individual::Individual,
     mutation::GaussianMutation,
     selection::RouletteWheelSelection,
+    statistics::Statistics,
 };
 
 use self::{
@@ -25,6 +26,7 @@ mod crossover;
 mod individual;
 mod mutation;
 mod selection;
+mod statistics;
 
 pub struct GeneticAlgorithm<S> {
     selection_method: S,
@@ -51,12 +53,12 @@ impl<S> GeneticAlgorithm<S>
         &self,
         rng: &mut dyn RngCore,
         population: &[I],
-    ) -> Vec<I>
+    ) -> (Vec<I>, Statistics)
         where
             I: Individual
     {
         assert!(!population.is_empty());
-        return (0..population.len())
+        let new_population = (0..population.len())
             .map(|_| {
                 // Selection
                 let [parent_a, parent_b] = [0, 1].map(|_| self.selection_method.select(rng, population).chromosome());
@@ -70,6 +72,8 @@ impl<S> GeneticAlgorithm<S>
                 return I::create(child);
             })
             .collect();
+        let stats = Statistics::new(population);
+        return (new_population, stats);
     }
 }
 
@@ -106,7 +110,8 @@ mod tests {
         // are easier to spot.
         // Running 10 generations for no other particular reason.
         for _ in 0..10 {
-            population = ga.evolve(&mut rng, &population);
+            let (new_pop, _) = ga.evolve(&mut rng, &population);
+            population = new_pop;
         }
 
         // Expect all fitness-es to have increased

@@ -1,5 +1,4 @@
-use serde::Serialize;
-use crate::sim;
+use crate::*;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct Food {

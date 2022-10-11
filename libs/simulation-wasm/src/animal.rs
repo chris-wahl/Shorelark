@@ -1,5 +1,4 @@
-use serde::Serialize;
-use lib_simulation as sim;
+use crate::*;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct Animal {

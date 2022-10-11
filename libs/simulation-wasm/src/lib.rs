@@ -1,18 +1,19 @@
 use rand::prelude::*;
 use wasm_bindgen::prelude::*;
+use serde::Serialize;
 
 use lib_simulation as sim;
 
 pub use crate::{
     animal::*,
-    eye::*,
     food::*,
+    statistics::*,
     world::*,
 };
 
 mod animal;
-mod eye;
 mod food;
+mod statistics;
 mod world;
 
 #[wasm_bindgen]
@@ -33,14 +34,18 @@ impl Simulation {
 
     pub fn world(&self) -> JsValue {
         let world = World::from(self.sim.world());
-        return JsValue::from_serde(&world).unwrap();
+        return serde_wasm_bindgen::to_value(&world).unwrap();
     }
 
-    pub fn step(&mut self) {
-        self.sim.step(&mut self.rng);
+    pub fn step(&mut self) -> JsValue {
+        if let Some(statistics) = self.sim.step(&mut self.rng) {
+            return serde_wasm_bindgen::to_value(&Statistics::from(&statistics)).unwrap();
+        }
+        return JsValue::null();
     }
 
-    pub fn train(&mut self) {
-        self.sim.train(&mut self.rng);
+    pub fn train(&mut self) -> JsValue {
+        let stats = self.sim.train(&mut self.rng);
+        return serde_wasm_bindgen::to_value(&Statistics::from(&stats)).unwrap();
     }
 }
