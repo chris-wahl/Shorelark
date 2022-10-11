@@ -15,12 +15,15 @@ viewport.style.height = viewport_height + 'px';
 const context = viewport.getContext('2d');
 context.fillStyle = 'rgb(0, 0, 0)';
 
-for (const animal of simulation.world().animals) {
-    context.fillRect(
-        animal.x * viewport_width,
-        animal.y * viewport_height,
-        15,
-        15,
-    );
+CanvasRenderingContext2D.prototype.draw_triangle = function(x, y, size) {
+    this.beginPath();
+    this.moveTo(x, y);
+    this.lineTo(x + size, y + size);
+    this.lineTo(x - size, y + size);
+    this.lineTo(x, y);
+    this.fillStyle = 'rgb(0, 0, 0)';
+    this.fill();
 }
-
+for (const animal of simulation.world().animals) {
+    context.draw_triangle(animal.x * viewport_width, animal.y * viewport_height , 0.01 * viewport_width);
+}
