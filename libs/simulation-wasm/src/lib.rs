@@ -6,10 +6,12 @@ use serde::Serialize;
 
 pub use crate::{
     animal::*,
+    food::*,
     world::*,
 };
 
 mod animal;
+mod food;
 mod world;
 
 #[wasm_bindgen]

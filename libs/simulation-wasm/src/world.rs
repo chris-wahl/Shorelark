@@ -1,11 +1,12 @@
 
 use serde::Serialize;
 use lib_simulation as sim;
-use crate::animal::*;
+use crate::{animal::Animal, food::Food};
 
 #[derive(Clone, Debug, Serialize)]
 pub struct World {
     pub animals: Vec<Animal>,
+    pub foods: Vec<Food>,
 }
 
 
@@ -16,6 +17,11 @@ impl From<&sim::World> for World {
             .iter()
             .map(Animal::from)
             .collect();
-        return Self { animals };
+        let foods = world
+            .foods()
+            .iter()
+            .map(Food::from)
+            .collect();
+        return Self { animals, foods };
     }
 }
