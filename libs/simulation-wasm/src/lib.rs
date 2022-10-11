@@ -36,6 +36,6 @@ impl Simulation {
     }
 
     pub fn step(&mut self) {
-        self.sim.step();
+        self.sim.step(&mut self.rng);
     }
 }

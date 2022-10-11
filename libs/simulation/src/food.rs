@@ -2,7 +2,7 @@ use crate::{na, Rng, RngCore};
 
 #[derive(Debug)]
 pub struct Food {
-    position: na::Point2<f32>,
+    pub(crate) position: na::Point2<f32>,
 }
 
 impl Food {
