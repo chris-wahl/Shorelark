@@ -1,7 +1,7 @@
+use rand::prelude::*;
 use wasm_bindgen::prelude::*;
 
 use lib_simulation as sim;
-use rand::prelude::*;
 
 pub use crate::{
     animal::*,
@@ -38,5 +38,9 @@ impl Simulation {
 
     pub fn step(&mut self) {
         self.sim.step(&mut self.rng);
+    }
+
+    pub fn train(&mut self) {
+        self.sim.train(&mut self.rng);
     }
 }

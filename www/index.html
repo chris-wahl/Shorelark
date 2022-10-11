@@ -7,11 +7,29 @@
       body {
         background: #1f2639;
       }
+      #train {
+        transition: 0.25s;
+        position: absolute;
+        top: 0;
+        margin: 15px;
+
+        background: aliceblue;
+        padding: 1em;
+        border-radius: 10%;
+        border: 1px solid rgba(31, 38, 57, 0);
+      }
+      #train:hover {
+        cursor: pointer;
+        background: #1f2639;
+        color: aliceblue;
+        border-color: aliceblue;
+      }
     </style>
   </head>
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <canvas id="viewport" width="800" height="800"></canvas>
+    <buton id="train">Train</buton>
     <script src="./bootstrap.js"></script>
   </body>
 </html>

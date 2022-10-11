@@ -1,7 +1,9 @@
 import * as sim from "lib-simulation-wasm";
 
 const simulation = new sim.Simulation();
-const world = simulation.world();
+document.getElementById('train').onclick = function () {
+    simulation.train();
+};
 
 const viewport = document.getElementById('viewport');
 const viewport_scale = window.devicePixelRatio || 1;
@@ -15,7 +17,7 @@ viewport.style.height = viewport_height + 'px';
 const context = viewport.getContext('2d');
 context.fillStyle = 'rgb(0, 0, 0)';
 
-CanvasRenderingContext2D.prototype.draw_triangle = function(x, y, size, rotation) {
+CanvasRenderingContext2D.prototype.draw_triangle = function (x, y, size, rotation) {
     this.beginPath();
 
     const multiplier = 1.5;
@@ -37,7 +39,7 @@ CanvasRenderingContext2D.prototype.draw_triangle = function(x, y, size, rotation
     // this.stroke();
 
 }
-CanvasRenderingContext2D.prototype.draw_circle = function(x, y, radius) {
+CanvasRenderingContext2D.prototype.draw_circle = function (x, y, radius) {
     this.beginPath();
     this.arc(x, y, radius, 0, 2.0 * Math.PI);
 
@@ -56,7 +58,7 @@ function redraw() {
     }
 
     for (const animal of world.animals) {
-        context.draw_triangle(animal.x * viewport_width, animal.y * viewport_height , 0.01 * viewport_width, animal.rotation);
+        context.draw_triangle(animal.x * viewport_width, animal.y * viewport_height, 0.01 * viewport_width, animal.rotation);
     }
 
     requestAnimationFrame(redraw);
