@@ -1,0 +1,53 @@
+body {
+    background: #1f2639;
+    color: aliceblue;
+    font-family: sans-serif;
+}
+
+a {
+    color: palevioletred;
+}
+
+#layout {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#viewport {
+    border: 1px aliceblue solid;
+}
+
+#stats_div {
+    margin: 1em;
+}
+
+#stats_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#stats_list div {
+    margin: 1em;
+}
+
+#train {
+    transition: 0.25s;
+    padding: 1em;
+
+    background: aliceblue;
+    color: #1f2639;
+
+    border-radius: 10%;
+    border: 1px solid rgba(31, 38, 57, 0);
+}
+
+#train:hover {
+    cursor: pointer;
+
+    background: #1f2639;
+    color: aliceblue;
+
+    border-color: aliceblue;
+}

@@ -2,62 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'wasm-unsafe-eval' 'self'; object-src 'none'; base-uri 'none'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; form-action 'none';">
     <title>Shorelark</title>
-    <style>
-        body {
-            background: #1f2639;
-            color: aliceblue;
-            font-family: sans-serif;
-        }
-
-        a {
-            color: palevioletred;
-        }
-
-        #layout {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        #viewport {
-            border: 1px aliceblue solid;
-        }
-
-        #stats_div {
-            margin: 1em;
-        }
-
-        #stats_list {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        #stats_list div {
-            margin: 1em;
-        }
-
-        #train {
-            transition: 0.25s;
-            padding: 1em;
-
-            background: aliceblue;
-            color: #1f2639;
-
-            border-radius: 10%;
-            border: 1px solid rgba(31, 38, 57, 0);
-        }
-
-        #train:hover {
-            cursor: pointer;
-
-            background: #1f2639;
-            color: aliceblue;
-
-            border-color: aliceblue;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
