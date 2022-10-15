@@ -9,6 +9,6 @@ import {SimulationService} from './services/simulation.service';
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private simulation: SimulationService) {
+  constructor() {
   }
 }

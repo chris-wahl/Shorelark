@@ -1,0 +1,7 @@
+section.sim {
+  display: flex;
+
+  & > * {
+    padding: 1em;
+  }
+}
