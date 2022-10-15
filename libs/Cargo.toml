@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "genetic-algorithm",
+    "neural-network",
+    "simulation",
+    "simulation-wasm",
+]
