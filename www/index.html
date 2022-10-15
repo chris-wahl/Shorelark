@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'wasm-unsafe-eval' 'self'; object-src 'none'; base-uri 'none'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; form-action 'none';">
+    <title>Shorelark</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+<p>
+    This project was built as a work-through of the <i>phenomenal</i> series of posts by Patryk Wychowaniec
+    called <a href="https://pwy.io/posts/learning-to-fly-pt1/">Learning to Fly.</a>
+</p>
+<br>
+<section id="layout">
+    <canvas id="viewport" width="800" height="800"></canvas>
+
+
+    <div id="stats_div">
+        <button id="train">Evolve</button>
+        <div id="stats_list">
+            <div>Min: <span id="stats_min">-</span></div>
+            <div>Max: <span id="stats_max">-</span></div>
+            <div>Avg: <span id="stats_avg">-</span></div>
+        </div>
+    </div>
+</section>
+
+<script src="./bootstrap.js"></script>
+</body>
+</html>
