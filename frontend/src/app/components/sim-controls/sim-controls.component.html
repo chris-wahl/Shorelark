@@ -1,2 +1,14 @@
-<p>sim-controls works!</p>
-<button mat-flat-button (click)="toggle_sim()">Toggle</button>
+<section>
+  <button (click)="toggle_sim()" [color]="running() ? 'primary' : 'accent'" class="play_pause" mat-flat-button>
+    {{ running() ? 'Pause' : 'Run' }}
+    <mat-icon>{{ running() ? 'pause' : 'play_arrow' }}</mat-icon>
+  </button>
+</section>
+<section>
+  <button (click)="train()" mat-flat-button [disabled]="is_training$ | async" >Train</button>
+  <br>
+  <mat-slider vertical
+    [(value)]="steps_to_train" [max]="MAX_TO_TRAIN" [min]="MIN_TO_TRAIN"
+              [step]="TICK_INTERVAL"
+              [tickInterval]="TICK_INTERVAL" color="accent" thumbLabel></mat-slider>
+</section>

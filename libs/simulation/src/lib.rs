@@ -59,22 +59,27 @@ impl Simulation {
         return &self.world;
     }
 
-    pub fn step(&mut self, rng: &mut dyn RngCore) -> Option<ga::Statistics> {
+    pub fn step(&mut self, rng: &mut dyn RngCore, generation_length: Option<usize>) -> Option<ga::Statistics> {
         self.process_collisions(rng);
         self.process_brains();
         self.process_movements();
 
+        let generation_length = match generation_length {
+            Some(gl) => gl,
+            None => GENERATION_LENGTH
+        };
+
         self.age += 1;
-        if self.age > GENERATION_LENGTH {
+        if self.age > generation_length {
             return Some(self.evolve(rng));
         }
         return None;
     }
 
     /// Fast-forwards until the end of the current generation.
-    pub fn train(&mut self, rng: &mut dyn RngCore) -> ga::Statistics {
+    pub fn train(&mut self, rng: &mut dyn RngCore, generation_length: Option<usize>) -> ga::Statistics {
         loop {
-            if let Some(summary) = self.step(rng) {
+            if let Some(summary) = self.step(rng, generation_length) {
                 return summary;
             }
         }

@@ -38,14 +38,14 @@ impl Simulation {
     }
 
     pub fn step(&mut self) -> JsValue {
-        if let Some(statistics) = self.sim.step(&mut self.rng) {
+        if let Some(statistics) = self.sim.step(&mut self.rng, None) {
             return serde_wasm_bindgen::to_value(&Statistics::from(&statistics)).unwrap();
         }
         return JsValue::null();
     }
 
-    pub fn train(&mut self) -> JsValue {
-        let stats = self.sim.train(&mut self.rng);
+    pub fn train(&mut self, generation_length: Option<usize>) -> JsValue {
+        let stats = self.sim.train(&mut self.rng, generation_length);
         return serde_wasm_bindgen::to_value(&Statistics::from(&stats)).unwrap();
     }
 }
